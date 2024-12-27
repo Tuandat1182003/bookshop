@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  >
+
+<head th:replace="/common/fragment :: head('Cart')" >
+  <title></title>
+</head>
+
+<body>
+<!-- Page Preloder -->
+<div id="preloder">
+  <div class="loader"></div>
+</div>
+
+<!-- Humberger Begin -->
+<div class="humberger__menu__overlay"></div>
+<div class="humberger__menu__wrapper" th:replace="/common/fragment.html ::humberger()">
+
+</div>
+<!-- Humberger End -->
+
+<!-- Header Section Begin -->
+<header th:replace="/common/fragment.html ::header()">
+
+</header>
+<!-- Header Section End -->
+
+<!-- Hero Section Begin -->
+<!-- Hero Section End -->
+
+<!-- Breadcrumb Section Begin -->
+<!-- Breadcrumb Section Begin -->
+<section th:replace="/common/fragment :: breadcrumbSection('wishlist')">
+
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Shoping Cart Section Begin -->
+<section class="shoping-cart spad">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="shoping__cart__table">
+          <p class="alert alert-success" th:if="${message}" th:text="${message}"></p>
+          <p class="alert alert-warning" th:if="${messageExist}" th:text="${messageExist}"></p>
+          <p class="alert alert-success" th:if="${messageDelete}" th:text="${messageDelete}"></p>
+          <table>
+            <thead>
+            <tr>
+              <th class="shoping__product">Products</th>
+              <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item:${wishList}">
+              <td class="shoping__cart__item">
+                <img th:src="@{'/images-file/' + ${item.product.imageName}}" alt="" style="width: 100px; height: 100px">
+                <h5 th:text="${item.product.name}">BOOK1</h5>
+              </td>
+              <td class="shoping__cart__price" th:text="${#numbers.formatDecimal(item.product.price, 0, 'COMMA', 0, 'POINT') + 'đ'}">
+
+              </td>
+              <td>
+                 <span>
+                    <a th:href="@{/cart/add(productId=${item.product.id}, quantity=${1})}"><button class="primary-btn">ADD TO CART</button></a>
+                 </span>
+              </td>
+              <td class="shoping__cart__total">
+                <span class="fa fa-heart"></span>
+              </td>
+              <td class="shoping__cart__item__close">
+                <a th:href="@{/wishlist/delete(productId=${item.product.id})}"><span class="icon_close"></span></a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- Shoping Cart Section End -->
+
+<!-- Footer Section Begin -->
+<footer th:replace="/common/fragment ::footer()">
+
+</footer>
+<!-- Footer Section End -->
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/adminPage/common/fragment ::head()">
+</head>
+<body>
+<div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <!-- navbar code here -->
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+            <a class="navbar-brand brand-logo" th:href="@{/home}"><img style="height: 42px" src="/img/logo.png" alt="logo" /></a>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-stretch">
+            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                <span class="mdi mdi-menu"></span>
+            </button>
+            <div class="search-field d-none d-md-block">
+                <form class="d-flex align-items-center h-100" action="#">
+                    <div class="input-group">
+                        <div class="input-group-prepend bg-transparent">
+                            <i class="input-group-text border-0 mdi mdi-magnify"></i>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <ul th:replace="/adminPage/common/fragment::ul()">
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                    <span class="mdi mdi-menu"></span>
+                </button>
+            </ul>
+        </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:../../partials/_sidebar.html -->
+        <nav th:replace="/adminPage/common/fragment::nav()"></nav>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Monthly Data</h4>
+                            <canvas id="monthlyBarChart" style="height: 400px; width: 100%;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+
+            <!-- partial:../../partials/_footer.html-->
+            <footer class="footer">
+                <!-- footer code here -->
+            </footer>
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>
+<!-- container-scroller -->
+<!-- plugins:js -->
+<div th:replace="/adminPage/common/fragment ::head()"></div>
+<!-- Custom js for this page -->
+<script src="/admin/vendors/js/vendor.bundle.base.js"></script>
+<!-- endinject -->
+<!-- Plugin js for this page -->
+<script src="/admin/vendors/chart.js/Chart.min.js"></script>
+<!-- End plugin js for this page -->
+<!-- inject:js -->
+<script src="/admin/js/off-canvas.js"></script>
+<script src="/admin/js/hoverable-collapse.js"></script>
+<script src="/admin/js/misc.js"></script>
+<!-- endinject -->
+<!-- Custom js for this page -->
+<script>
+    const ctx = document.getElementById('monthlyBarChart').getContext('2d');
+    let monthlyBarChart;
+
+    async function fetchMonthlyRevenue(year) {
+        try {
+            // Gọi API và lấy dữ liệu
+            const response = await fetch(`/api/monthly-revenue?year=${year}`);
+            const data = await response.json();
+
+            // Chuẩn bị dữ liệu cho biểu đồ
+            const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            const revenueData = Array(12).fill(0);
+
+            // Điền dữ liệu vào mảng revenueData dựa trên kết quả từ API
+            for (const [month, revenue] of Object.entries(data)) {
+                revenueData[month - 1] = revenue;
+            }
+
+            // Nếu biểu đồ đã tồn tại, xóa dữ liệu cũ
+            if (monthlyBarChart) {
+                monthlyBarChart.destroy();
+            }
+
+            // Tạo biểu đồ với dữ liệu từ API
+            monthlyBarChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: `Revenue for ${year} (in VND)`,
+                        data: revenueData,
+                        backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem, data) {
+                                const formatter = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND', minimumFractionDigits: 0 });
+                                return formatter.format(tooltipItem.yLabel); // Hiển thị tiền tệ với ký hiệu ₫
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    const formatter = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND', minimumFractionDigits: 0 });
+                                    return formatter.format(value); // Hiển thị giá trị cột y với ký hiệu ₫
+                                }
+                            }
+                        }
+                    }
+                }
+
+            });
+        } catch (error) {
+            console.error('Error fetching monthly revenue:', error);
+        }
+    }
+
+    // Gọi hàm fetchMonthlyRevenue với năm mong muốn
+    fetchMonthlyRevenue(new Date().getFullYear()); // Gọi cho năm hiện tại
+</script>
+
+
+<!-- End custom js for this page -->
+</body>
+</html>

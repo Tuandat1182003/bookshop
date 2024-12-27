@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  >
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head th:replace="/common/fragment :: head('Home')" >
+  <title></title>
+</head>
+
+<style>
+  .container{max-width:1170px; margin:auto;}
+  img{ max-width:100%;}
+  .inbox_people {
+    background: #f8f8f8 none repeat scroll 0 0;
+    float: left;
+    overflow: hidden;
+    width: 40%; border-right:1px solid #c4c4c4;
+  }
+  .inbox_msg {
+    border: 1px solid #c4c4c4;
+    clear: both;
+    overflow: hidden;
+  }
+  .top_spac{ margin: 20px 0 0;}
+
+
+  .recent_heading {float: left; width:40%;}
+  .srch_bar {
+    display: inline-block;
+    text-align: right;
+    width: 60%;
+  }
+  .headind_srch{ padding:10px 29px 10px 20px; overflow:hidden; border-bottom:1px solid #c4c4c4;}
+
+  .recent_heading h4 {
+    color: #05728f;
+    font-size: 21px;
+    margin: auto;
+  }
+  .srch_bar input{ border:1px solid #cdcdcd; border-width:0 0 1px 0; width:80%; padding:2px 0 4px 6px; background:none;}
+  .srch_bar .input-group-addon button {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: medium none;
+    padding: 0;
+    color: #707070;
+    font-size: 18px;
+  }
+  .srch_bar .input-group-addon { margin: 0 0 0 -27px;}
+
+  .chat_ib h5{ font-size:15px; color:#464646; margin:0 0 8px 0;}
+  .chat_ib h5 span{ font-size:13px; float:right;}
+  .chat_ib p{ font-size:14px; color:#989898; margin:auto}
+  .chat_img {
+    float: left;
+    width: 11%;
+  }
+  .chat_ib {
+    float: left;
+    padding: 0 0 0 15px;
+    width: 88%;
+  }
+
+  .chat_people{ overflow:hidden; clear:both;}
+  .chat_list {
+    border-bottom: 1px solid #c4c4c4;
+    margin: 0;
+    padding: 18px 16px 10px;
+  }
+  .inbox_chat { height: 550px; overflow-y: scroll;}
+
+  .active_chat{ background:#ebebeb;}
+
+  .incoming_msg_img {
+    display: inline-block;
+    width: 6%;
+  }
+  .received_msg {
+    display: inline-block;
+    padding: 0 0 0 10px;
+    vertical-align: top;
+    width: 92%;
+  }
+  .received_withd_msg p {
+    background: #ebebeb none repeat scroll 0 0;
+    border-radius: 3px;
+    color: #646464;
+    font-size: 14px;
+    margin: 0;
+    padding: 5px 10px 5px 12px;
+    width: 100%;
+  }
+  .time_date {
+    color: #747474;
+    display: block;
+    font-size: 12px;
+    margin: 8px 0 0;
+  }
+  .received_withd_msg { width: 57%;}
+  .mesgs {
+    float: left;
+    padding: 30px 15px 0 25px;
+    width: 60%;
+  }
+
+  .sent_msg p {
+    background: #05728f none repeat scroll 0 0;
+    border-radius: 3px;
+    font-size: 14px;
+    margin: 0; color:#fff;
+    padding: 5px 10px 5px 12px;
+    width:100%;
+  }
+  .outgoing_msg{ overflow:hidden; margin:26px 0 26px;}
+  .sent_msg {
+    float: right;
+    width: 46%;
+  }
+  .input_msg_write input {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: medium none;
+    color: #4c4c4c;
+    font-size: 15px;
+    min-height: 48px;
+    width: 100%;
+  }
+
+  .type_msg {border-top: 1px solid #c4c4c4;position: relative;}
+  .msg_send_btn {
+    background: #05728f none repeat scroll 0 0;
+    border: medium none;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    font-size: 17px;
+    height: 33px;
+    position: absolute;
+    right: 0;
+    top: 11px;
+    width: 33px;
+  }
+  .messaging { padding: 0 0 50px 0;}
+  .msg_history {
+    height: 516px;
+    overflow-y: auto;
+  }
+</style>
+
+<body>
+<!-- Page Preloder -->
+<div id="preloder">
+  <div class="loader"></div>
+</div>
+
+<!-- Humberger Begin -->
+<div class="humberger__menu__overlay"></div>
+<div class="humberger__menu__wrapper">
+  <div class="humberger__menu__logo">
+    <a href="#"><img src="img/logo.png" alt=""></a>
+  </div>
+  <div class="humberger__menu__cart">
+    <ul>
+      <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
+      <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+    </ul>
+    <div class="header__cart__price">item: <span>$150.00</span></div>
+  </div>
+  <div class="humberger__menu__widget">
+    <div class="header__top__right__language">
+      <img src="img/language.png" alt="">
+      <div>English</div>
+      <span class="arrow_carrot-down"></span>
+      <ul>
+        <li><a href="#">Spanis</a></li>
+        <li><a href="#">English</a></li>
+      </ul>
+    </div>
+    <div class="header__top__right__auth">
+      <a href="#"><i class="fa fa-user"></i> Login</a>
+    </div>
+  </div>
+  <nav class="humberger__menu__nav mobile-menu">
+    <ul>
+      <li class="active"><a href="./index.html">Home</a></li>
+      <li><a href="./shop-grid.html">Shop</a></li>
+      <li><a href="#">Pages</a>
+        <ul class="header__menu__dropdown">
+          <li><a href="./shop-details.html">Shop Details</a></li>
+          <li><a href="./shoping-cart.html">Shoping Cart</a></li>
+          <li><a href="./checkout.html">Check Out</a></li>
+          <li><a href="./blog-details.html">Blog Details</a></li>
+        </ul>
+      </li>
+      <li><a href="./blog.html">Blog</a></li>
+      <li><a href="./contact.html">Contact</a></li>
+    </ul>
+  </nav>
+  <div id="mobile-menu-wrap"></div>
+  <div class="header__top__right__social">
+    <a href="#"><i class="fa fa-facebook"></i></a>
+    <a href="#"><i class="fa fa-twitter"></i></a>
+    <a href="#"><i class="fa fa-linkedin"></i></a>
+    <a href="#"><i class="fa fa-pinterest-p"></i></a>
+  </div>
+  <div class="humberger__menu__contact">
+    <ul>
+      <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
+      <li>Free Shipping for all Order of $99</li>
+    </ul>
+  </div>
+</div>
+<!-- Humberger End -->
+<!-- Header Section Begin -->
+<header th:replace="/common/fragment::header()">
+</header>
+<section th:replace="/common/fragment::breadcrumbSection('Contact Us')">
+</section>
+<!-- Contact Form Begin -->
+<div class="contact-form spad">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="contact__form__title">
+          <h2>Chat with admin</h2>
+        </div>
+      </div>
+    </div>
+    <div id="status" hidden=""></div>
+    <form action="#" >
+      <div class="" width="50%">
+        <div class="msg_history" id="msg_history">
+          <div class="incoming_msg">
+            <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+            <div class="received_msg">
+              <div class="received_withd_msg">
+                <p>Test which is a new approach to have all
+                  solutions</p>
+                <span class="time_date"> 11:01 AM    |    June 9</span></div>
+            </div>
+          </div>
+          <div class="outgoing_msg">
+            <div class="sent_msg">
+              <p>Test which is a new approach to have all
+                solutions</p>
+              <span class="time_date"> 11:01 AM    |    June 9</span> </div>
+          </div>
+          <div class="incoming_msg">
+            <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+            <div class="received_msg">
+              <div class="received_withd_msg">
+                <p>Test, which is a new approach to have</p>
+                <span class="time_date"> 11:01 AM    |    Yesterday</span></div>
+            </div>
+          </div>
+          <div class="outgoing_msg">
+            <div class="sent_msg">
+              <p>Apollo University, Delhi, India Test</p>
+              <span class="time_date"> 11:01 AM    |    Today</span> </div>
+          </div>
+          <div class="incoming_msg">
+            <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+            <div class="received_msg">
+              <div class="received_withd_msg">
+                <p>We work directly with our designers and suppliers,
+                  and sell direct to you, which means quality, exclusive
+                  products, at a price anyone can afford.</p>
+                <span class="time_date"> 11:01 AM    |    Today</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="type_msg">
+          <div class="input_msg_write">
+            <input type="text" class="write_msg" id="msg" placeholder="Type a message">
+            <button onclick="send()" class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+<!-- Contact Form End -->
+<!-- Footer Section Begin -->
+<span sec:authentication="principal.user.id" id="username"></span>
+<footer th:replace="/common/fragment::footer()">
+
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+<script>
+  const stompClient = new StompJs.Client({
+    brokerURL: 'ws://localhost:8080/ws'
+  });
+
+  stompClient.onConnect = (frame) => {
+    setConnected(true);
+    console.log('Connected: ' + frame);
+
+    if (username) {
+      stompClient.subscribe('/topic/' + username, onMessageReceived);
+      console.log("Subscribed to channel: /topic/" + username); // Debug log
+    } else {
+      console.error("Username is empty. Cannot subscribe to channel.");
+    }
+  };
+
+  stompClient.onWebSocketError = (error) => {
+    updateStatus("ERROR: WebSocket Connection Failed", "red");
+    console.error('WebSocket error:', error);
+  };
+
+  stompClient.onStompError = (frame) => {
+    updateStatus("ERROR: STOMP Protocol Issue", "red");
+    console.error('Broker error:', frame.headers['message']);
+    console.error('Details:', frame.body);
+  };
+
+  function setConnected(connected) {
+    if (connected) {
+      updateStatus("Connected", "green");
+    } else {
+      updateStatus("Disconnected", "red");
+    }
+  }
+
+  function updateStatus(message, color) {
+    const statusElement = document.getElementById("status");
+    statusElement.innerText = message;
+    statusElement.style.color = color;
+  }
+  var username = document.getElementById("username").textContent.trim();
+  function connect() {
+    if (!username) {
+      alert("Please enter your username before connecting.");
+      return;
+    }
+    stompClient.activate();
+  }
+
+  function disconnect() {
+    stompClient.deactivate();
+    setConnected(false);
+    console.log("Disconnected");
+  }
+
+  function send() {
+    const content = document.getElementById("msg").value.trim();
+    if (content == '' || content == null || content == undefined) return;
+    const from = document.getElementById('username').textContent.trim();
+    const to = 'admin';
+    var d1 = document.getElementById('msg_history')
+    d1.insertAdjacentHTML('beforeend', '<div class="outgoing_msg">\n' +
+            '      <div class="sent_msg">\n' +
+            '        <p>' + content + '</p>\n' +
+            '        <span class="time_date"> ' + new Date().toLocaleString() + '</span></div>\n' +
+            '    </div>');
+    document.getElementById("msg").value = '';
+    d1.scrollTop = d1.scrollHeight;
+
+    if (!content || !from || !to) {
+      alert("Please fill in all fields before sending a message.");
+      return;
+    }
+
+    const message = JSON.stringify({
+      content: content,
+      from: from,
+      to: to
+    });
+
+    stompClient.publish({
+      destination: "/app/contact",
+      body: message
+    });
+
+    document.getElementById("msg").value = '';
+  }
+
+  function onMessageReceived(event) {
+    const message = JSON.parse(event.body);
+    var d1 = document.getElementById('msg_history')
+    d1.insertAdjacentHTML('beforeend', '<div class="incoming_msg">\n' +
+            '            <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>\n' +
+            '            <div class="received_msg">\n' +
+            '              <div class="received_withd_msg">\n' +
+            '                <p>' + message.content + '</p>\n' +
+            '                <span class="time_date"> ' + new Date().toLocaleDateString() + '</span></div>\n' +
+            '            </div>\n' +
+            '          </div>');
+    d1.scrollTop = d1.scrollHeight;
+  }
+
+  // Automatically connect when the page loads
+  document.addEventListener("DOMContentLoaded", () => {
+    if (username) {
+      connect();
+    }
+  });
+</script>
+
+
+</body>
+
+</html>

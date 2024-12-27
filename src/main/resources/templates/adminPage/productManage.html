@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/adminPage/common/fragment ::head()">
+
+</head>
+<body>
+<div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+            <a class="navbar-brand brand-logo" th:href="@{/admin}"><img style="height: 42px" src="/img/logo.png" alt="logo" /></a>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-stretch">
+            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                <span class="mdi mdi-menu"></span>
+            </button>
+            <div class="search-field d-none d-md-block">
+                <form class="d-flex align-items-center h-100" action="#">
+                    <div class="input-group">
+                        <div class="input-group-prepend bg-transparent">
+                            <i class="input-group-text border-0 mdi mdi-magnify"></i>
+                        </div>
+                        <input type="text" class="form-control bg-transparent border-0" placeholder="Search projects">
+                    </div>
+                </form>
+            </div>
+            <ul class="navbar-nav navbar-nav-right">
+                <li class="nav-item nav-profile dropdown">
+                    <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="nav-profile-img">
+                            <img src="/img/admin.jpg" alt="image">
+                            <span class="availability-status online"></span>
+                        </div>
+                        <div class="nav-profile-text">
+                            <p class="mb-1 text-black">Gordon Ramsay</p>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                        <a class="dropdown-item" href="#">
+                            <i class="mdi mdi-cached me-2 text-success"></i> Activity Log </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">
+                            <i class="mdi mdi-logout me-2 text-primary"></i> Signout </a>
+                    </div>
+                </li>
+                <li class="nav-item d-none d-lg-block full-screen-link">
+                    <a class="nav-link">
+                        <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="mdi mdi-email-outline"></i>
+                        <span class="count-symbol bg-warning"></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
+                        <h6 class="p-3 mb-0">Messages</h6>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item preview-item">
+                            <div class="preview-thumbnail">
+                                <img src="../../assets/images/faces/face4.jpg" alt="image" class="profile-pic">
+                            </div>
+                            <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                                <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Mark send you a message</h6>
+                                <p class="text-gray mb-0"> 1 Minutes ago </p>
+                            </div>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item preview-item">
+                            <div class="preview-thumbnail">
+                                <img src="../../assets/images/faces/face2.jpg" alt="image" class="profile-pic">
+                            </div>
+                            <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                                <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Cregh send you a message</h6>
+                                <p class="text-gray mb-0"> 15 Minutes ago </p>
+                            </div>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item preview-item">
+                            <div class="preview-thumbnail">
+                                <img src="../../assets/images/faces/face3.jpg" alt="image" class="profile-pic">
+                            </div>
+                            <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                                <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Profile picture updated</h6>
+                                <p class="text-gray mb-0"> 18 Minutes ago </p>
+                            </div>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <h6 class="p-3 mb-0 text-center">4 new messages</h6>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
+                        <i class="mdi mdi-bell-outline"></i>
+                        <span class="count-symbol bg-danger"></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                        <h6 class="p-3 mb-0">Notifications</h6>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item preview-item">
+                            <div class="preview-thumbnail">
+                                <div class="preview-icon bg-success">
+                                    <i class="mdi mdi-calendar"></i>
+                                </div>
+                            </div>
+                            <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                                <h6 class="preview-subject font-weight-normal mb-1">Event today</h6>
+                                <p class="text-gray ellipsis mb-0"> Just a reminder that you have an event today </p>
+                            </div>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item preview-item">
+                            <div class="preview-thumbnail">
+                                <div class="preview-icon bg-warning">
+                                    <i class="mdi mdi-settings"></i>
+                                </div>
+                            </div>
+                            <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                                <h6 class="preview-subject font-weight-normal mb-1">Settings</h6>
+                                <p class="text-gray ellipsis mb-0"> Update dashboard </p>
+                            </div>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item preview-item">
+                            <div class="preview-thumbnail">
+                                <div class="preview-icon bg-info">
+                                    <i class="mdi mdi-link-variant"></i>
+                                </div>
+                            </div>
+                            <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                                <h6 class="preview-subject font-weight-normal mb-1">Launch Admin</h6>
+                                <p class="text-gray ellipsis mb-0"> New admin wow! </p>
+                            </div>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <h6 class="p-3 mb-0 text-center">See all notifications</h6>
+                    </div>
+                </li>
+                <li class="nav-item nav-logout d-none d-lg-block">
+                    <a class="nav-link" href="#">
+                        <i class="mdi mdi-power"></i>
+                    </a>
+                </li>
+                <li class="nav-item nav-settings d-none d-lg-block">
+                    <a class="nav-link" href="#">
+                        <i class="mdi mdi-format-line-spacing"></i>
+                    </a>
+                </li>
+            </ul>
+            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                <span class="mdi mdi-menu"></span>
+            </button>
+        </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:../../partials/_sidebar.html -->
+        <nav th:replace="/adminPage/common/fragment::nav()"></nav>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <h1>Product</h1>
+                <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div style="display: flex; justify-content: space-between">
+                                <h4 class="card-title">Product Table</h4>
+                                <p class="alert alert-success" th:if="${messageSuccess}" th:text="${messageSuccess}"></p>
+                                <p class="alert alert-success" th:if="${messageDelete}" th:text="${messageDelete}"></p>
+                                <p class="alert alert-success" th:if="${messageUpdate}" th:text="${messageUpdate}"></p>
+                                <a th:href="@{/adminPage/productManage/addProduct}">
+                                    <button class="btn btn-gradient-danger btn-fw" >Add new product</button>
+                                </a>
+                            </div>
+                            </p>
+                            <table class="table table-hover">
+                                <thead>
+                                <tr class="text-danger" style="text-align: center">
+                                    <!--                  <th>User name</th>-->
+                                    <th style="text-align: start">Product name</th>
+                                    <th>Price</th>
+                                    <th>Discount</th>
+                                    <th>Quantity</th>
+                                    <th>Total buy</th>
+                                    <th>Image</th>
+<!--                                    <th style="width: 290px; word-wrap: break-word; white-space: normal;">Description</th>-->
+                                    <th style="text-align: center">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="product : ${products}">
+                                    <!--                  <td th:text="${user.username}"></td>-->
+                                    <td th:text="${product.name}"></td>
+                                    <td th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT') + 'đ'}"></td>
+                                    <td th:text="${product.discount}"></td>
+                                    <td th:text="${product.quantity}"></td>
+                                    <td th:text="${product.totalBuy}"></td>
+                                    <td>
+                                        <img style="width: 100px; height: 100px; border-radius: 0" th:src="@{'/images-file/' + ${product.imageName}}" >
+                                    </td>
+<!--                                    <td  style="word-wrap: break-word; white-space: normal;" th:text="${product.description}"></td>-->
+                                    <td  style="text-align: center">
+                                        <a th:href="@{/adminPage/productManage/update/{id}(id=${product.id})}" class="btn btn-gradient-primary btn-rounded btn-xs">Update</a>
+                                        <a th:href="@{/adminPage/productManage/delete(productId=${product.id})}" class="btn btn-gradient-success btn-rounded btn-xs">Delete</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="product__pagination text-center">
+                                <!-- Arrow Left -->
+                                <a th:href="${currentPage > 1 ? '@{?pageNo=' + (currentPage - 1) + '}' : null}">
+                                    <i class="fa fa-long-arrow-left"></i>
+                                </a>
+
+                                <!-- Page Numbers -->
+                                <a th:each="i : ${#numbers.sequence(1, totalPages)}"
+                                   th:classappend="${currentPage == i ? 'active' : ''}"
+                                   th:href="@{'?pageNo=' + ${i}}"
+                                   th:text="${i}"></a>
+
+                                <!-- Arrow Right -->
+                                <a th:href="@{'?pageNo=' + ${currentPage + 1}}"
+                                   th:classappend="${currentPage == totalPages ? 'disabled' : ''}">
+                                    <i class="fa fa-long-arrow-right"></i>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+            <!-- partial:../../partials/_footer.html -->
+            <footer class="footer">
+
+            </footer>
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+    </div>
+</div>
+
+<!-- page-body-wrapper ends -->
+</div>
+<!-- container-scroller -->
+<!-- plugins:js -->
+<div th:replace="/adminPage/common/fragment ::head()">
+
+</div>
+<!-- Custom js for this page -->
+<!-- End custom js for this page -->
+</body>
+</html>

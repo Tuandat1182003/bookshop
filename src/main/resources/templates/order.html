@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  >
+
+<head th:replace="/common/fragment :: head('Order')" >
+    <title></title>
+</head>
+
+<body>
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
+
+<!-- Humberger Begin -->
+<div class="humberger__menu__overlay"></div>
+<div class="humberger__menu__wrapper" th:replace="/common/fragment.html ::humberger()">
+
+</div>
+<!-- Humberger End -->
+
+<!-- Header Section Begin -->
+<header th:replace="/common/fragment.html ::header()">
+
+</header>
+<!-- Header Section End -->
+
+<!-- Hero Section Begin -->
+<!-- Hero Section End -->
+
+<!-- Breadcrumb Section Begin -->
+<!-- Breadcrumb Section Begin -->
+<section th:replace="/common/fragment :: breadcrumbSection('order')">
+
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Shoping Cart Section Begin -->
+<section class="shoping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shoping__cart__table">
+                    <p class="alert alert-success" th:if="${message}" th:text="${message}"></p>
+                    <p class="alert alert-success" th:if="${mess}" th:text="${mess}"></p>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th class="shoping__product" style="width: 290px; word-wrap: break-word; white-space: normal;">Products</th>
+                            <th class="shoping__product">Total Price</th>
+                            <th class="shoping__product">Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="item:${orders.getContent()}">
+                            <td class="shoping__cart__item">
+                                <div th:each="product, iterStat : ${item.products}" style="display: inline; width: 0px">
+                                    <span th:text="${product.name}"></span><span th:if="${!iterStat.last}">, </span>
+                                </div>
+                            </td>
+
+                            <td class="shoping__cart__item" th:text="${#numbers.formatDecimal(item.totalPrice, 0, 'COMMA', 0, 'POINT') + 'đ'}">
+
+                            </td>
+
+                            <td class="shoping__cart__item">
+                                <span th:switch="${item.status}">
+                                    <span th:case="1" class="badge bg-warning text-dark">Đang giao hàng</span>
+                                    <span th:case="2" class="badge bg-success text-light">Giao hàng thành công</span>
+                                    <span th:case="3" class="badge bg-danger text-light">Hủy đơn hàng</span>
+                                    <span th:case="4" class="badge bg-primary text-light">Chờ duyệt đơn</span>
+                                </span>
+                            </td>
+
+                            <td class="shoping__cart__item__close">
+                                <p th:if="${item.status == 2}"></p>
+                                <a th:if="${item.status != 2}" th:href="@{/order/cancel/{id}(id=${item.id})}">
+                                    <span class="icon_close"></span>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!-- Shoping Cart Section End -->
+
+<!-- Footer Section Begin -->
+<footer th:replace="/common/fragment ::footer()">
+
+</footer>
+<!-- Footer Section End -->
+
+
+
+</body>
+
+</html>
